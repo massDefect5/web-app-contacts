@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Home Page{% endblock %}
+
+{% block content %}
+    <h1>Welcome to the Contact Manager app.</h1>
+  {% if current_user.is_authenticated %}
+    <p>You can start adding contacts and view the existing ones.</p>
+  {% else %}
+    <p>You need to log in before adding or viewing contacts.</p>
+  {% endif %}
+{% endblock %}
