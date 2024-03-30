@@ -35,6 +35,27 @@ class Contact(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
 
 
+# create the dummy users
+with app.app_context():
+    db.create_all()
+    # add sample passwords
+    if not User.query.filter_by(username="admin").first():
+        admin_password_hash = bcrypt.generate_password_hash("admin").decode("utf-8")
+        admin_user = User(username="admin", password=admin_password_hash)
+        db.session.add(admin_user)
+
+    if not User.query.filter_by(username="user1").first():
+        user1_password_hash = bcrypt.generate_password_hash("password1").decode("utf-8")
+        user1 = User(username="user1", password=user1_password_hash)
+        db.session.add(user1)
+
+    if not User.query.filter_by(username="user2").first():
+        user2_password_hash = bcrypt.generate_password_hash("password2").decode("utf-8")
+        user2 = User(username="user2", password=user2_password_hash)
+        db.session.add(user2)
+    db.session.commit()
+
+
 # login manager, user loader and related routes
 login_manager = LoginManager(app)
 login_manager.login_view = "login"
@@ -118,24 +139,4 @@ def edit_contact(contact_id):
 
 
 if __name__ == "__main__":
-    with app.app_context():
-        db.create_all()
-        # add sample passwords
-        if not User.query.filter_by(username="admin").first():
-            admin_password_hash = bcrypt.generate_password_hash("admin").decode("utf-8")
-            admin_user = User(username="admin", password=admin_password_hash)
-            db.session.add(admin_user)
-
-        if not User.query.filter_by(username="user1").first():
-            user1_password_hash = bcrypt.generate_password_hash("password1").decode("utf-8")
-            user1 = User(username="user1", password=user1_password_hash)
-            db.session.add(user1)
-
-        if not User.query.filter_by(username="user2").first():
-            user2_password_hash = bcrypt.generate_password_hash("password2").decode("utf-8")
-            user2 = User(username="user2", password=user2_password_hash)
-            db.session.add(user2)
-
-        db.session.commit()
-
     app.run(debug=True)

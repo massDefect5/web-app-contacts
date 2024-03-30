@@ -7,4 +7,6 @@
     - cat id_xxx.pub
     - copy, add to Github account
 3. clone app repo in the home folder, near my_site
-4. update 
+4. change the path to source code 
+5. change the folder and the app name in the WSGI configuration file 
+6. reload the web app
