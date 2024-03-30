@@ -2,5 +2,5 @@
 .venv
 
 # database and instance files
-app/instance/
+instance/
 
